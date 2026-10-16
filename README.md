@@ -51,6 +51,13 @@ organisation mark and the application icons are brand assets with all rights
 reserved. That reservation, the third-party status (nothing third-party), and
 the prototype's status are stated in `NOTICE`.
 
+One trap: these two files are extension-less, which is the Apache convention and
+what lets GitHub recognise them, but GitHub Pages serves those names as
+`application/octet-stream`. A link to `/LICENSE` therefore **downloads** instead
+of rendering, and Pages does not allow custom headers to change that. The footer
+links to the repository's rendered view (`/blob/main/...`) for that reason —
+point new links there, not at the site path.
+
 ## Updating the prototype
 
 The prototype's source of truth is `素材/ui-prototype/cubsync-ui-demo.html` in the
