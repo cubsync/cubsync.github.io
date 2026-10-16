@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CubSync · 跨平台文件同步</title>
+<meta name="description" content="CubSync —— 一个引擎，多种后端。在你的设备之间同步文件夹，Android / 桌面 / 无头守护进程，同一套代码。">
+<meta property="og:title" content="CubSync · 跨平台文件同步">
+<meta property="og:description" content="一个引擎，多种后端。在你的设备之间同步文件夹。">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://cubsync.github.io/">
+<meta property="og:image" content="https://cubsync.github.io/assets/social-preview.png">
+<meta property="og:image:width" content="1280">
+<meta property="og:image:height" content="640">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="alternate icon" href="assets/favicon.ico" sizes="16x16 32x32 48x48">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<style>
+  :root{
+    --brand:#3A5CCC; --brand2:#1FA8A0;
+    --bg:#FFFFFF; --fg:#14161C; --dim:#5A6172; --line:#E4E7EF; --card:#F6F7FB;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{ --bg:#0E1116; --fg:#EEF0F5; --dim:#98A0B3; --line:#232833; --card:#161A22; }
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    background:var(--bg); color:var(--fg);
+    font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans SC","Microsoft YaHei",system-ui,sans-serif;
+    -webkit-font-smoothing:antialiased; display:flex; min-height:100vh; flex-direction:column;
+  }
+  main{flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center;
+       text-align:center; padding:72px 24px 48px; max-width:760px; margin:0 auto; width:100%}
+  .lockup{width:min(340px,72vw); height:auto; margin-bottom:40px}
+  h1{font-size:clamp(28px,5vw,40px); line-height:1.25; margin:0 0 14px; letter-spacing:-.02em}
+  p.lede{font-size:clamp(15px,2.2vw,18px); color:var(--dim); margin:0 0 8px; max-width:34em}
+  p.lede.en{font-size:14px; margin-bottom:40px}
+  .actions{display:flex; gap:12px; flex-wrap:wrap; justify-content:center; margin-bottom:56px}
+  a.btn{
+    display:inline-flex; align-items:center; gap:9px; padding:13px 26px; border-radius:10px;
+    font-size:15px; font-weight:600; text-decoration:none; transition:transform .12s ease, box-shadow .12s ease, background .12s ease;
+  }
+  a.btn:hover{transform:translateY(-1px)}
+  a.primary{background:var(--brand); color:#fff; box-shadow:0 4px 16px rgba(58,92,204,.28)}
+  a.primary:hover{background:#3452B6}
+  a.ghost{background:var(--card); color:var(--fg); border:1px solid var(--line)}
+  a.ghost:hover{border-color:var(--brand)}
+  .facts{display:flex; gap:28px; flex-wrap:wrap; justify-content:center; font-size:13.5px; color:var(--dim)}
+  .facts span{display:inline-flex; align-items:center; gap:7px}
+  .dot{width:6px; height:6px; border-radius:50%; background:var(--brand2); flex:none}
+  footer{padding:24px; text-align:center; font-size:13px; color:var(--dim); border-top:1px solid var(--line)}
+  footer a{color:var(--dim); text-decoration:none; border-bottom:1px solid transparent}
+  footer a:hover{color:var(--brand); border-bottom-color:var(--brand)}
+</style>
+</head>
+<body>
+<main>
+  <img class="lockup" src="assets/lockup.svg" alt="CubSync">
+
+  <h1>一个引擎，多种后端</h1>
+  <p class="lede">在你的设备之间同步文件夹 —— 走过自己的局域网，Android、桌面、无头守护进程共用同一套代码，同一份界面规格。</p>
+  <p class="lede en">Cross-platform file sync — one engine, many backends.</p>
+
+  <div class="actions">
+    <a class="btn primary" href="demo/">在线体验原型 →</a>
+    <a class="btn ghost" href="https://github.com/cubsync/CubSync/releases/latest">下载 &amp; 查看仓库</a>
+  </div>
+
+  <div class="facts">
+    <span><i class="dot"></i>双向 / 镜像 / 仅更新</span>
+    <span><i class="dot"></i>内容哈希比对</span>
+    <span><i class="dot"></i>断点续传</span>
+    <span><i class="dot"></i>Apache-2.0</span>
+  </div>
+</main>
+<footer>
+  <a href="https://github.com/cubsync/CubSync">cubsync/CubSync</a> ·
+  <a href="demo/">界面原型</a> ·
+  <a href="https://github.com/cubsync/CubSync/releases">发布版本</a>
+</footer>
+</body>
+</html>
