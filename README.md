@@ -4,9 +4,8 @@ The CubSync project site, served by GitHub Pages at <https://cubsync.github.io/>
 
 ```
 index.html          the landing page — hand-written, bilingual, no build step
-demo/index.html     the two-end GUI prototype — an exact copy of
-                    素材/ui-prototype/cubsync-ui-demo.html from the main
-                    workspace; self-contained, no external requests
+demo/index.html     the two-end GUI prototype — copied from the main project;
+                    self-contained, no external requests
 assets/             favicon, apple-touch-icon, lockup, social preview
 favicon.ico         fallback for pages that do not declare an icon
 LICENSE             Apache-2.0, identical to the main repository's
@@ -14,8 +13,7 @@ NOTICE              scope, brand-asset reservation, third-party status
 .nojekyll           serve the files as they are, no Jekyll
 ```
 
-Everything here is static. There is no build, no framework and no dependency —
-edit a file, commit, and it is live in about a minute.
+Everything here is static — no build step, no framework, no dependency.
 
 ## Language
 
@@ -58,14 +56,12 @@ of rendering, and Pages does not allow custom headers to change that. The footer
 links to the repository's rendered view (`/blob/main/...`) for that reason —
 point new links there, not at the site path.
 
-## Updating the prototype
+## The prototype
 
-The prototype's source of truth is `素材/ui-prototype/cubsync-ui-demo.html` in the
-main workspace. Do not edit `demo/index.html` here; copy over it:
-
-```
-cp 素材/ui-prototype/cubsync-ui-demo.html CubSync-site/demo/index.html
-```
+`demo/index.html` is generated output, not a file to edit: it is a copy of the
+interface prototype, and a change made here would be overwritten on the next copy
+and would drift from the design document. Change the prototype at its source and
+copy the file over.
 
 ## Brand assets
 
