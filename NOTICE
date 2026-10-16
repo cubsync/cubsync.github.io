@@ -1,0 +1,81 @@
+CubSync website
+Copyright 2026 CubSync
+
+This repository is licensed under the Apache License, Version 2.0 (see LICENSE).
+
+================================================================================
+NOTICE
+================================================================================
+
+1. What this repository is
+--------------------------------------------------------------------------------
+
+cubsync.github.io is the CubSync project site: a landing page (index.html), a copy
+of the interface prototype (demo/), and the brand assets the page displays
+(assets/). It is static. There is no build and no dependency.
+
+The main project — the engine, the protocol, the backends and both applications —
+lives at https://github.com/cubsync/CubSync and is licensed under Apache-2.0 under
+the same copyright holder.
+
+2. Brand assets are not covered by the licence
+--------------------------------------------------------------------------------
+
+Section 6 of the Apache-2.0 license grants no rights to trade names, trademarks,
+service marks or product names. Accordingly:
+
+  * The Apache-2.0 license covers the source of this site.
+  * It does NOT grant any right to use the CubSync name, the CubSync logo, the
+    organisation mark, the application icons, or any other brand asset, in whole
+    or in part, for any purpose — including in a derived work, a fork, or a
+    product of your own.
+
+The CubSync name and marks are brand assets of the project. All rights reserved.
+
+If you want to use them — for a review, an article, a package, or a distribution
+— ask first: https://github.com/cubsync/CubSync/issues
+
+3. Third-party components
+--------------------------------------------------------------------------------
+
+None. Every file in this repository is either
+
+  * original work created for CubSync (the landing page, the prototype, the
+    icons and the marks), or
+  * copied verbatim from the main repository, which is licensed under the same
+    terms as this one.
+
+The site makes no network request to any third party at runtime: no web fonts,
+no CDN scripts, no analytics, no trackers. There is nothing to attribute.
+
+4. The interface prototype (demo/)
+--------------------------------------------------------------------------------
+
+demo/index.html is the design document for the two applications, kept runnable in
+a browser as a copy of 素材/ui-prototype/cubsync-ui-demo.html from the project
+workspace. It is a design artefact, not a build of the product: it simulates the
+interface and performs no file transfer.
+
+Its screen text is Chinese, deliberately. Localisation of the applications is not
+started; the prototype is not a localisation target.
+
+5. Prior art
+--------------------------------------------------------------------------------
+
+The project's credits and prior-art statement — HybridFileXfer, FolderSync Pro,
+Material Files, FreeFileSync — is maintained in the main repository:
+
+    https://github.com/cubsync/CubSync/blob/main/NOTICE
+
+Nothing in this repository reproduces code, assets, text or visual design from any
+of them.
+
+6. Reporting an attribution issue
+--------------------------------------------------------------------------------
+
+If you believe this NOTICE is incomplete or inaccurate, or that this project
+improperly uses your work, open an issue at:
+
+    https://github.com/cubsync/CubSync/issues
+
+We will respond and correct the record promptly.

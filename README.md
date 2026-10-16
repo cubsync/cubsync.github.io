@@ -3,17 +3,53 @@
 The CubSync project site, served by GitHub Pages at <https://cubsync.github.io/>.
 
 ```
-index.html          the landing page (hand-written, no build step)
+index.html          the landing page — hand-written, bilingual, no build step
 demo/index.html     the two-end GUI prototype — an exact copy of
                     素材/ui-prototype/cubsync-ui-demo.html from the main
                     workspace; self-contained, no external requests
 assets/             favicon, apple-touch-icon, lockup, social preview
 favicon.ico         fallback for pages that do not declare an icon
+LICENSE             Apache-2.0, identical to the main repository's
+NOTICE              scope, brand-asset reservation, third-party status
 .nojekyll           serve the files as they are, no Jekyll
 ```
 
 Everything here is static. There is no build, no framework and no dependency —
 edit a file, commit, and it is live in about a minute.
+
+## Language
+
+`index.html` carries both languages in the markup and switches with CSS
+(`html[data-lang]` hides the other set). No translation files, no fetch, no
+flash of the wrong language: the resolver runs inline in `<head>`, before
+anything is painted.
+
+Resolution order:
+
+1. `?lang=zh` / `?lang=en` in the URL — explicit, and shareable
+2. the previous choice, in `localStorage`
+3. the browser's language (`navigator.languages[0]`, `zh*` → Chinese)
+4. English
+
+Chinese is the default in the markup, so the page is correct with JavaScript
+disabled. The switcher is the fixed control in the top-right corner; it writes
+the choice back to `localStorage` and to the URL with `history.replaceState`.
+
+Two languages is the current scope. A third one is a new entry in the `META`
+map plus another `lang-xx` set — the mechanism does not need to change.
+
+The prototype under `demo/` is deliberately **not** localised: it is the design
+document, and its screen text is Chinese. See NOTICE §4.
+
+## Licensing
+
+The site is Apache-2.0, the same licence as the main repository, and `LICENSE`
+is copied from there verbatim — keep the two in step if either is ever amended.
+
+Apache-2.0 does **not** cover the brand: the CubSync name, the logo, the
+organisation mark and the application icons are brand assets with all rights
+reserved. That reservation, the third-party status (nothing third-party), and
+the prototype's status are stated in `NOTICE`.
 
 ## Updating the prototype
 

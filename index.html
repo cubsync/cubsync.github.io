@@ -1,10 +1,12 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-lang="zh">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>CubSync · 跨平台文件同步</title>
 <meta name="description" content="CubSync —— 一个引擎，多种后端。在你的设备之间同步文件夹，Android / 桌面 / 无头守护进程，同一套代码。">
+<meta name="theme-color" content="#3A5CCC">
+<meta property="og:site_name" content="CubSync">
 <meta property="og:title" content="CubSync · 跨平台文件同步">
 <meta property="og:description" content="一个引擎，多种后端。在你的设备之间同步文件夹。">
 <meta property="og:type" content="website">
@@ -12,6 +14,8 @@
 <meta property="og:image" content="https://cubsync.github.io/assets/social-preview.png">
 <meta property="og:image:width" content="1280">
 <meta property="og:image:height" content="640">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:locale:alternate" content="en_US">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="alternate icon" href="assets/favicon.ico" sizes="16x16 32x32 48x48">
@@ -31,12 +35,26 @@
     font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans SC","Microsoft YaHei",system-ui,sans-serif;
     -webkit-font-smoothing:antialiased; display:flex; min-height:100vh; flex-direction:column;
   }
+  /* 语言：默认按 data-lang 显示一套，切换纯 CSS，无脚本也正常 */
+  html[data-lang="zh"] .lang-en{display:none !important}
+  html[data-lang="en"] .lang-zh{display:none !important}
+
+  .lang{position:fixed; top:18px; right:20px; display:flex; gap:2px; padding:3px;
+        background:var(--card); border:1px solid var(--line); border-radius:9px; z-index:9}
+  .lang button{
+    font:inherit; font-size:13px; font-weight:600; line-height:1; padding:7px 12px;
+    border:0; border-radius:6px; background:transparent; color:var(--dim); cursor:pointer;
+  }
+  .lang button:hover{color:var(--fg)}
+  html[data-lang="zh"] .lang button[data-set-lang="zh"],
+  html[data-lang="en"] .lang button[data-set-lang="en"]{background:var(--brand); color:#fff}
+
   main{flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center;
        text-align:center; padding:72px 24px 48px; max-width:760px; margin:0 auto; width:100%}
   .lockup{width:min(340px,72vw); height:auto; margin-bottom:40px}
   h1{font-size:clamp(28px,5vw,40px); line-height:1.25; margin:0 0 14px; letter-spacing:-.02em}
   p.lede{font-size:clamp(15px,2.2vw,18px); color:var(--dim); margin:0 0 8px; max-width:34em}
-  p.lede.en{font-size:14px; margin-bottom:40px}
+  p.lede.sub{font-size:14px; margin-bottom:40px}
   .actions{display:flex; gap:12px; flex-wrap:wrap; justify-content:center; margin-bottom:56px}
   a.btn{
     display:inline-flex; align-items:center; gap:9px; padding:13px 26px; border-radius:10px;
@@ -47,38 +65,118 @@
   a.primary:hover{background:#3452B6}
   a.ghost{background:var(--card); color:var(--fg); border:1px solid var(--line)}
   a.ghost:hover{border-color:var(--brand)}
+  .note{font-size:12.5px; color:var(--dim); margin:-40px 0 44px; max-width:36em}
   .facts{display:flex; gap:28px; flex-wrap:wrap; justify-content:center; font-size:13.5px; color:var(--dim)}
   .facts span{display:inline-flex; align-items:center; gap:7px}
   .dot{width:6px; height:6px; border-radius:50%; background:var(--brand2); flex:none}
-  footer{padding:24px; text-align:center; font-size:13px; color:var(--dim); border-top:1px solid var(--line)}
+  footer{padding:24px 24px 28px; text-align:center; font-size:13px; color:var(--dim); border-top:1px solid var(--line)}
+  footer nav{margin-bottom:10px}
   footer a{color:var(--dim); text-decoration:none; border-bottom:1px solid transparent}
   footer a:hover{color:var(--brand); border-bottom-color:var(--brand)}
+  footer .legal{font-size:12px; opacity:.85; max-width:44em; margin:0 auto}
+  footer .legal strong{font-weight:600; color:var(--fg)}
 </style>
+<script>
+/* 语言解析：显式 ?lang= → 上次选择 → 浏览器语言 → 英文。
+   放在 head 里同步执行，元素尚未绘制，因此没有闪烁。 */
+(function () {
+  var KEY = 'cubsync.lang';
+  var q = new URLSearchParams(location.search).get('lang');
+  var saved = null;
+  try { saved = localStorage.getItem(KEY); } catch (e) {}
+  var nav = (navigator.languages && navigator.languages[0]) || navigator.language || '';
+  var lang = (q === 'en' || q === 'zh') ? q
+           : (saved === 'en' || saved === 'zh') ? saved
+           : (/^zh\b/i.test(nav) ? 'zh' : 'en');
+
+  var META = {
+    zh: { title: 'CubSync · 跨平台文件同步',
+          desc: 'CubSync —— 一个引擎，多种后端。在你的设备之间同步文件夹，Android / 桌面 / 无头守护进程，同一套代码。' },
+    en: { title: 'CubSync · Cross-platform file sync',
+          desc: 'CubSync keeps folders in sync between your devices over your own network. Android, desktop and headless, one engine, many backends.' }
+  };
+
+  function paint(l) {
+    var d = document.documentElement;
+    d.setAttribute('data-lang', l);
+    d.setAttribute('lang', l === 'zh' ? 'zh-CN' : 'en');
+    document.title = META[l].title;
+    var m = document.querySelector('meta[name="description"]');
+    if (m) m.setAttribute('content', META[l].desc);
+    var og = document.querySelector('meta[property="og:locale"]');
+    if (og) og.setAttribute('content', l === 'zh' ? 'zh_CN' : 'en_US');
+    var ogt = document.querySelector('meta[property="og:title"]');
+    if (ogt) ogt.setAttribute('content', META[l].title);
+    var ogd = document.querySelector('meta[property="og:description"]');
+    if (ogd) ogd.setAttribute('content', META[l].desc);
+  }
+  paint(lang);
+
+  function choose(l) {
+    try { localStorage.setItem(KEY, l); } catch (e) {}
+    paint(l);
+    var u = new URL(location.href);
+    u.searchParams.set('lang', l);
+    history.replaceState(null, '', u);
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('[data-set-lang]').forEach(function (b) {
+      b.addEventListener('click', function () { choose(b.getAttribute('data-set-lang')); });
+    });
+  });
+})();
+</script>
 </head>
 <body>
+
+<div class="lang" role="group" aria-label="Language / 语言">
+  <button type="button" data-set-lang="zh">中</button>
+  <button type="button" data-set-lang="en">EN</button>
+</div>
+
 <main>
   <img class="lockup" src="assets/lockup.svg" alt="CubSync">
 
-  <h1>一个引擎，多种后端</h1>
-  <p class="lede">在你的设备之间同步文件夹 —— 走过自己的局域网，Android、桌面、无头守护进程共用同一套代码，同一份界面规格。</p>
-  <p class="lede en">Cross-platform file sync — one engine, many backends.</p>
+  <h1 class="lang-zh">一个引擎，多种后端</h1>
+  <h1 class="lang-en">One engine, many backends</h1>
+
+  <p class="lede lang-zh">在你的设备之间同步文件夹 —— 走过自己的局域网，Android、桌面、无头守护进程共用同一套代码，同一份界面规格。</p>
+  <p class="lede lang-en">Keep folders in sync between your own devices, over your own network. Android, desktop and a headless daemon, all from one codebase and one interface specification.</p>
+
+  <p class="lede sub lang-zh">Cross-platform file sync — one engine, many backends.</p>
+  <p class="lede sub lang-en">跨平台文件同步 —— 一个引擎，多种后端。</p>
 
   <div class="actions">
-    <a class="btn primary" href="demo/">在线体验原型 →</a>
-    <a class="btn ghost" href="https://github.com/cubsync/CubSync/releases/latest">下载 &amp; 查看仓库</a>
+    <a class="btn primary lang-zh" href="demo/">在线体验原型 →</a>
+    <a class="btn primary lang-en" href="demo/">Try the prototype →</a>
+    <a class="btn ghost lang-zh" href="https://github.com/cubsync/CubSync/releases/latest">下载 &amp; 查看仓库</a>
+    <a class="btn ghost lang-en" href="https://github.com/cubsync/CubSync/releases/latest">Download &amp; source</a>
   </div>
 
+  <p class="note lang-zh">原型是设计稿原件，界面文字为中文；下面截图来自两端真实应用。</p>
+  <p class="note lang-en">The prototype is the design document itself, so its screens are in Chinese. The screenshots in the repository are from the real applications.</p>
+
   <div class="facts">
-    <span><i class="dot"></i>双向 / 镜像 / 仅更新</span>
-    <span><i class="dot"></i>内容哈希比对</span>
-    <span><i class="dot"></i>断点续传</span>
+    <span><i class="dot"></i><span class="lang-zh">双向 / 镜像 / 仅更新</span><span class="lang-en">Two-way · mirror · update-only</span></span>
+    <span><i class="dot"></i><span class="lang-zh">内容哈希比对</span><span class="lang-en">Content-hash comparison</span></span>
+    <span><i class="dot"></i><span class="lang-zh">断点续传</span><span class="lang-en">Resumable transfers</span></span>
     <span><i class="dot"></i>Apache-2.0</span>
   </div>
 </main>
+
 <footer>
-  <a href="https://github.com/cubsync/CubSync">cubsync/CubSync</a> ·
-  <a href="demo/">界面原型</a> ·
-  <a href="https://github.com/cubsync/CubSync/releases">发布版本</a>
+  <nav>
+    <a href="https://github.com/cubsync/CubSync">cubsync/CubSync</a> ·
+    <a href="demo/"><span class="lang-zh">界面原型</span><span class="lang-en">Prototype</span></a> ·
+    <a href="https://github.com/cubsync/CubSync/releases"><span class="lang-zh">发布版本</span><span class="lang-en">Releases</span></a> ·
+    <a href="LICENSE">LICENSE</a> ·
+    <a href="NOTICE">NOTICE</a>
+  </nav>
+  <p class="legal">
+    <span class="lang-zh">© 2026 CubSync · 本站内容以 <a href="LICENSE">Apache-2.0</a> 许可发布。<strong>许可证不授予 CubSync 名称与图形标志（含 logo 与组织图标）的任何使用权</strong> —— 这些为品牌资产，保留所有权利，详见 <a href="NOTICE">NOTICE</a>。</span>
+    <span class="lang-en">© 2026 CubSync · This site is released under the <a href="LICENSE">Apache-2.0</a> license. <strong>The license grants no right to the CubSync name or marks</strong> (the logo and the organisation mark) — those are brand assets, all rights reserved. See <a href="NOTICE">NOTICE</a>.</span>
+  </p>
 </footer>
 </body>
 </html>
